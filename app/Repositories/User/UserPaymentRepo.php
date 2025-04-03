@@ -12,8 +12,8 @@ class UserPaymentRepo
             if ($e->errorInfo[1] == 1062) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Duplicate entry detected! Please use a unique email or phone number.',
-                ], 409); // 409 Conflict HTTP status
+                    'message' => 'Duplicate entry detected! Please use a transaction id.',
+                ], 409);
             }
 
             return response()->json([
@@ -31,7 +31,7 @@ class UserPaymentRepo
                 'message' => "No payment is there",
             ], 404);
         }
-        
+
         return response()->json([
             'status' => true,
             'message' => 'Payment details',

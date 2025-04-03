@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\User\UserDetailController;
 use App\Http\Controllers\UserPaymentController;
+use App\Http\Controllers\ProductListController;
+use App\Http\Controllers\UserEnquiryFormController;
 
 // Public Routes
 Route::post('/register', [UserController::class, 'register']);
@@ -26,4 +28,11 @@ Route::middleware(['jwt.auth'])->group(function () {
     Route::post('/payments', [UserPaymentController::class, 'store']);
     Route::get('/user-payments/{user_id}', [UserPaymentController::class, 'getUserPaymentsByUserId']);
 
+    Route::post('/product',[ProductListController::class, 'store']);
+    Route::get('/products',[ProductListController::class, 'index']);
+    Route::put('/products/{id}', [ProductListController::class, 'update']);
+    Route::post('/product/delete/{id}', [ProductListController::class, 'delete']);
+
+    Route::get('/enquires',[UserEnquiryFormController::class, 'index']);
+    Route::post('/enquiry', [UserEnquiryFormController::class, 'store']);
 });

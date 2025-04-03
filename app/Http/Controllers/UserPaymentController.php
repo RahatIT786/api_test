@@ -10,7 +10,6 @@ class UserPaymentController extends Controller
 {
     protected $userPaymentService;
 
-    
     public function __construct(UserPaymentService $userPaymentService)
     {
         $this->userPaymentService = $userPaymentService;
@@ -44,13 +43,15 @@ class UserPaymentController extends Controller
             'delete_status' => 'nullable|integer',
         ]);
 
-        $userPayment = $this->userPaymentService->createUserPayment($validated);
+        //$userPayment = $this->userPaymentService->createUserPayment($validated);
 
-        return response()->json([
-            'status' => true,
-            'message' => "User Payment successfully",
-            'userPayment' => $userPayment
-        ], 201);
+        // return response()->json([
+        //     'status' => true,
+        //     'message' => "User Payment successfully",
+        //     'userPayment' => $userPayment
+        // ], 201);
+
+        return 'test';
     }
 
     /**
@@ -58,7 +59,7 @@ class UserPaymentController extends Controller
      */
     public function show(UserPayment $userPayment)
     {
-        
+
     }
 
     /**
