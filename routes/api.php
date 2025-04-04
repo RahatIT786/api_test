@@ -31,6 +31,7 @@ Route::middleware(['jwt.auth'])->group(function () {
 
     Route::post('/product',[ProductListController::class, 'store']);
     Route::get('/products',[ProductListController::class, 'index']);
+    Route::get('/product/{id}',[ProductListController::class, 'show']);
     Route::put('/products/{id}', [ProductListController::class, 'update']);
     Route::post('/product/delete/{id}', [ProductListController::class, 'delete']);
 
