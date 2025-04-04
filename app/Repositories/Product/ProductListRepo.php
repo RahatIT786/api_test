@@ -10,11 +10,19 @@ class ProductListRepo
     {
         $products = ProductList::where('delete_status','1')->get();
 
+        $products->transform(function ($product) {
+            $product->product_image_url = $product->product_image
+                ? asset(str_replace('public/', '', $product->product_image))
+                : null;
+            return $product;
+        });
+
         return response()->json([
             'message' => 'Get all Product successfully.',
             'products' => $products,
         ], 200);
     }
+
 
     public function getById($id)
     {
@@ -28,7 +36,6 @@ class ProductListRepo
             'message' => 'Product added successfully.',
             'product' => $product,
         ]);
-
     }
 
     public function update($id, array $data)

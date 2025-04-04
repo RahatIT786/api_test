@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\Product\ProductListService;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class ProductListController extends Controller
 {
@@ -17,6 +19,7 @@ class ProductListController extends Controller
     public function index()
     {
         //return 'test';
+        Log::info(response()->json($this->productListService->getAllProducts()));
         return response()->json($this->productListService->getAllProducts());
     }
 
@@ -27,19 +30,29 @@ class ProductListController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
+
+        $validated = $request->validate([
             'name' => 'required|string',
             'category' => 'required|string',
             'price' => 'required|numeric',
             'description' => 'nullable|string',
             'stock' => 'required|integer',
-            'product_image' => 'nullable|string',
-            'delete_status' => 'nullable|in:1,2'
+            'product_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'delete_status' => 'nullable|in:1,2',
         ]);
 
-        return response()->json($this->productListService->createProduct($data), 201);
-    }
+        // if ($request->hasFile('product_image')) {
+        //     $path = $request->file('product_image')->store('public/products');
+        //     $validated['product_image'] = Storage::url($path);
+        // }
 
+        if ($request->hasFile('product_image')) {
+            $path = $request->file('product_image')->store('products', 'public');
+            $validated['product_image'] = Storage::url($path);
+        }
+
+        return response()->json($this->productListService->createProduct($validated), 201);
+    }
 
     public function update(Request $request, $id)
     {

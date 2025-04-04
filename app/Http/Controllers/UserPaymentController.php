@@ -43,15 +43,14 @@ class UserPaymentController extends Controller
             'delete_status' => 'nullable|integer',
         ]);
 
-        //$userPayment = $this->userPaymentService->createUserPayment($validated);
+        $userPayment = $this->userPaymentService->createUserPayment($validated);
 
-        // return response()->json([
-        //     'status' => true,
-        //     'message' => "User Payment successfully",
-        //     'userPayment' => $userPayment
-        // ], 201);
+        return response()->json([
+            'status' => true,
+            'message' => "User Payment successfully",
+            'userPayment' => $userPayment
+        ], 201);
 
-        return 'test';
     }
 
     /**
