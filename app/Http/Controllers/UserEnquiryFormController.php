@@ -14,9 +14,10 @@ class UserEnquiryFormController extends Controller
         $this->userEnquiryFormService = $service;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json($this->userEnquiryFormService->getAllEnquiries());
+        $perPage = $request->input('per_page', 10);
+        return response()->json($this->userEnquiryFormService->getAllEnquiries($perPage));
     }
 
     public function store(Request $request)

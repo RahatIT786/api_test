@@ -5,9 +5,11 @@ use App\Models\UserEnquiryForm;
 
 class UserEnquiryFormRepo
 {
-    public function getAll()
+    public function getAll($perPage = 10)
     {
-        return UserEnquiryForm::where('delete_status','1')->get();
+        return UserEnquiryForm::where('delete_status','1')
+                                    ->orderBy('created_at', 'desc')
+                                    ->paginate($perPage);
     }
 
     public function findById($id)

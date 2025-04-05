@@ -13,9 +13,9 @@ class UserEnquiryFormService
         $this->userEnquiryFormRepo = $repository;
     }
 
-    public function getAllEnquiries()
+    public function getAllEnquiries($perPage = 10)
     {
-        return $this->userEnquiryFormRepo->getAll();
+        return $this->userEnquiryFormRepo->getAll($perPage);
     }
 
     public function createEnquiry(array $data)

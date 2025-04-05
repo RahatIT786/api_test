@@ -56,15 +56,20 @@ class ProductListController extends Controller
 
     public function update(Request $request, $id)
     {
+        Log::info($request->all());
         $data = $request->validate([
             'name' => 'sometimes|required|string',
             'category' => 'sometimes|required|string',
             'price' => 'sometimes|required|numeric',
             'description' => 'nullable|string',
             'stock' => 'sometimes|required|integer',
-            'product_image' => 'nullable|string',
+            'product_image' => 'nullable|file|image|max:2048',
             'delete_status' => 'nullable|in:1,2'
         ]);
+        if ($request->hasFile('product_image')) {
+            $path = $request->file('product_image')->store('products', 'public');
+            $data['product_image'] = Storage::url($path);
+        }
 
         return response()->json($this->productListService->updateProduct($id, $data));
     }
